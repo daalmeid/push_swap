@@ -6,7 +6,7 @@
 /*   By: daalmeid <daalmeid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:04:32 by daalmeid          #+#    #+#             */
-/*   Updated: 2021/12/17 15:17:44 by daalmeid         ###   ########.fr       */
+/*   Updated: 2021/12/21 14:11:49 by daalmeid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ void	ft_swap_ab(int *arr_a, int *arr_b, int nulnum)
 	ft_putstr_fd("ss\n", 1);
 }
 
-void	ft_push_a(int *arr_a, int *arr_b, int ac, int nulnum)
+void	ft_push_a(int *arr_a, int *arr_b, int arg, int nulnum)
 {
 	int	i;
 
 	i = 0;
 	if (*arr_b == nulnum)
 		return ;
-	while (i < ac - 2)
+	while (i < arg - 1)
 		i++;
 	while (i > 0)
 	{
@@ -69,7 +69,7 @@ void	ft_push_a(int *arr_a, int *arr_b, int ac, int nulnum)
 		i--;
 	}
 	arr_a[0] = arr_b[0];
-	while (arr_b[i] != nulnum && i < ac - 2)
+	while (arr_b[i] != nulnum && i < arg - 1)
 	{
 		arr_b[i] = arr_b[i + 1];
 		i++;
@@ -78,14 +78,14 @@ void	ft_push_a(int *arr_a, int *arr_b, int ac, int nulnum)
 	ft_putstr_fd("pa\n", 1);
 }
 
-void	ft_push_b(int *arr_a, int *arr_b, int ac, int nulnum)
+void	ft_push_b(int *arr_a, int *arr_b, int arg, int nulnum)
 {
 	int	i;
 
 	i = 0;
 	if (*arr_a == nulnum)
 		return ;
-	while (i < ac - 2)
+	while (i < arg - 1)
 		i++;
 	while (i > 0)
 	{
@@ -93,7 +93,7 @@ void	ft_push_b(int *arr_a, int *arr_b, int ac, int nulnum)
 		i--;
 	}
 	arr_b[0] = arr_a[0];
-	while (arr_a[i] != nulnum && i < ac - 2)
+	while (arr_a[i] != nulnum && i < arg - 1)
 	{
 		arr_a[i] = arr_a[i + 1];
 		i++;
@@ -102,14 +102,14 @@ void	ft_push_b(int *arr_a, int *arr_b, int ac, int nulnum)
 	ft_putstr_fd("pb\n", 1);
 }
 
-void	ft_rot_a(int *arr_a, int ac, int nulnum)
+void	ft_rot_a(int *arr_a, int arg, int nulnum)
 {
 	int	tmp;
 	int	i;
 	
 	tmp = arr_a[0];
 	i = 0;
-	while (arr_a[i] != nulnum && i < ac - 1)
+	while (arr_a[i] != nulnum && i < arg - 1)
 	{
 		arr_a[i] = arr_a[i + 1];
 		i++;
@@ -118,14 +118,14 @@ void	ft_rot_a(int *arr_a, int ac, int nulnum)
 	ft_putstr_fd("ra\n", 1);
 }
 
-void	ft_rot_b(int *arr_b, int ac, int nulnum)
+void	ft_rot_b(int *arr_b, int arg, int nulnum)
 {
 	int	tmp;
 	int	i;
 
 	i = 0;
 	tmp = arr_b[i];
-	while (arr_b[i] != nulnum && i < ac - 1)
+	while (arr_b[i] != nulnum && i < arg - 1)
 	{
 		arr_b[i] = arr_b[i + 1];
 		i++;
@@ -134,14 +134,14 @@ void	ft_rot_b(int *arr_b, int ac, int nulnum)
 	ft_putstr_fd("rb\n", 1);
 }
 
-void	ft_rot_ab(int *arr_a, int *arr_b, int ac, int nulnum)
+void	ft_rot_ab(int *arr_a, int *arr_b, int arg, int nulnum)
 {
 	int	tmp;
 	int	i;
 
 	i = 0;
 	tmp = arr_a[i];
-	while (arr_a[i] != nulnum && i < ac - 1)
+	while (arr_a[i] != nulnum && i < arg - 1)
 	{
 		arr_a[i] = arr_a[i + 1];
 		i++;
@@ -149,7 +149,7 @@ void	ft_rot_ab(int *arr_a, int *arr_b, int ac, int nulnum)
 	arr_a[--i] = tmp;
 	i = 0;
 	tmp = arr_b[i];
-	while (arr_b[i] != nulnum && i < ac - 1)
+	while (arr_b[i] != nulnum && i < arg - 1)
 	{
 		arr_b[i] = arr_b[i + 1];
 		i++;
@@ -158,12 +158,12 @@ void	ft_rot_ab(int *arr_a, int *arr_b, int ac, int nulnum)
 	ft_putstr_fd("rr\n", 1);
 }
 
-void	ft_revrot_a(int *arr_a, int ac, int nulnum)
+void	ft_revrot_a(int *arr_a, int arg, int nulnum)
 {
 	int	tmp;
 	int	i;
 
-	i = ac - 2;
+	i = arg - 1;
 	while(i > 0 && arr_a[i] == nulnum)
 		i--;
 	tmp = arr_a[i];
@@ -176,12 +176,12 @@ void	ft_revrot_a(int *arr_a, int ac, int nulnum)
 	ft_putstr_fd("rra\n", 1);
 }
 
-void	ft_revrot_b(int *arr_b, int ac, int nulnum)
+void	ft_revrot_b(int *arr_b, int arg, int nulnum)
 {
 	int	tmp;
 	int	i;
 
-	i = ac - 2;
+	i = arg - 1;
 	while(i > 0 && arr_b[i] == nulnum)
 		i--;
 	tmp = arr_b[i];
@@ -194,12 +194,12 @@ void	ft_revrot_b(int *arr_b, int ac, int nulnum)
 	ft_putstr_fd("rrb\n", 1);
 }
 
-void	ft_revrot_ab(int *arr_a, int *arr_b, int ac, int nulnum)
+void	ft_revrot_ab(int *arr_a, int *arr_b, int arg, int nulnum)
 {
 	int	tmp;
 	int	i;
 
-	i = ac - 2;
+	i = arg - 1;
 	while(i > 0 && arr_a[i] == nulnum)
 		i--;
 	tmp = arr_a[i];
@@ -209,7 +209,7 @@ void	ft_revrot_ab(int *arr_a, int *arr_b, int ac, int nulnum)
 		i--;
 	}
 	arr_a[i] = tmp;
-	i = ac - 2;
+	i = arg - 1;
 	while(i > 0 && arr_b[i] == nulnum)
 		i--;
 	tmp = arr_b[i];
@@ -222,14 +222,14 @@ void	ft_revrot_ab(int *arr_a, int *arr_b, int ac, int nulnum)
 	ft_putstr_fd("rrr\n", 1);
 }
 
-int	ft_check_order(int	*arr, int ac, int nulnum)
+int	ft_check_order(int	*arr, int arg, int nulnum)
 {
 	int	i;
 	int size;
 
 	i = 0;
 	size = 0;
-	while (size <= ac - 2 && arr[size] != nulnum)
+	while (size < arg && arr[size] != nulnum)
 		size++;
 	while (arr[i] != nulnum && i < size)
 	{
@@ -240,12 +240,12 @@ int	ft_check_order(int	*arr, int ac, int nulnum)
 	return (1);
 }
 
-void	ft_organize(int *arr_a, int *arr_b, int nulnum, int ac)
+void	ft_organize(int *arr_a, int *arr_b, int nulnum, int arg)
 {
 	int	lst_a;
 	int	lst_b;
 
-	lst_a = ac - 2;
+	lst_a = arg - 1;
 	lst_b = 0;
 	while (lst_b <= lst_a && arr_b[lst_b] != nulnum)
 		lst_b++;
@@ -262,24 +262,24 @@ void	ft_organize(int *arr_a, int *arr_b, int nulnum, int ac)
 		else if (arr_b[0] < arr_b[1])
 			ft_swap_b(arr_b, nulnum);
 		if (arr_a[0] > arr_a[lst_a] && arr_b[0] < arr_b[lst_b])
-			ft_revrot_ab(arr_a, arr_b, ac, nulnum);
+			ft_revrot_ab(arr_a, arr_b, arg, nulnum);
 		else if (arr_a[0] > arr_a[lst_a])
-			ft_revrot_a(arr_a, ac, nulnum);
+			ft_revrot_a(arr_a, arg, nulnum);
 		else if (arr_b[0] < arr_b[lst_b])
-			ft_revrot_b(arr_b, ac, nulnum);
+			ft_revrot_b(arr_b, arg, nulnum);
 		if (arr_a[0] < arr_a[lst_a] && arr_a[1] > arr_a[lst_a] && arr_b[0] > arr_b[lst_b] && arr_b[1] < arr_b[lst_b])
 		{
-			ft_revrot_ab(arr_a, arr_b, ac, nulnum);
+			ft_revrot_ab(arr_a, arr_b, arg, nulnum);
 			ft_swap_ab(arr_a, arr_b, nulnum);
 		}
 		else if (arr_a[0] < arr_a[lst_a] && arr_a[1] > arr_a[lst_a])
 		{
-			ft_revrot_a(arr_a, ac, nulnum);
+			ft_revrot_a(arr_a, arg, nulnum);
 			ft_swap_a(arr_a, nulnum);
 		}
 		else if (arr_b[0] > arr_b[lst_b] && arr_b[1] < arr_b[lst_b])
 		{
-			ft_revrot_b(arr_b, ac, nulnum);
+			ft_revrot_b(arr_b, arg, nulnum);
 			ft_swap_b(arr_b, nulnum);
 		}
 		if ((lst_a <= 1 && arr_b[lst_b] <= arr_b[1] && arr_b[1] < arr_b[0])

@@ -6,7 +6,7 @@
 /*   By: daalmeid <daalmeid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:04:26 by daalmeid          #+#    #+#             */
-/*   Updated: 2021/12/21 13:48:27 by daalmeid         ###   ########.fr       */
+/*   Updated: 2021/12/27 15:36:03 by daalmeid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ int	ft_error_check(char **split_arg)
 		while (split_arg[arg][i] != '\0')
 		{
 			if (i == 0 && (split_arg[arg][i] == '-' || split_arg[arg][i] == '+'))
-			{
 				i++;
-				continue ;
-			}
 			if (!ft_isdigit(split_arg[arg][i]))
 				return (0);
 			i++;
@@ -46,10 +43,10 @@ int	ft_val_check(char **split_arg)
 	i = 0;
 	while (split_arg[i] != NULL)
 	{
-		if (ft_strncmp(split_arg[i], "2147483647", 10) > 0 && ft_strlen(split_arg[i]) == 10)
+		if (ft_strncmp(split_arg[i], "2147483647", 10) > 0 && ft_strlen(split_arg[i]) >= 10)
 			return (0);
 		else if (ft_strncmp(split_arg[i], "-2147483648", 11) > 0
-			&& split_arg[i][0] == '-' && ft_strlen(split_arg[i]) == 11)
+				&& split_arg[i][0] == '-' && ft_strlen(split_arg[i]) >= 11)
 			return (0);
 		i++;
 	}

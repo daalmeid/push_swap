@@ -6,7 +6,7 @@
 /*   By: daalmeid <daalmeid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 13:24:57 by daalmeid          #+#    #+#             */
-/*   Updated: 2021/12/23 14:41:42 by daalmeid         ###   ########.fr       */
+/*   Updated: 2021/12/27 19:26:31 by daalmeid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	rec_organize_b(int *arr_a, int *arr_b, int arg, int nulnum, int size)
 	int	j;
 	int next_num;
 
+	if (arr_b[0] == nulnum)
+		return ;
 	j = 0;
 	while (j < size)
 	{
@@ -100,38 +102,54 @@ void	rec_organize_a(int *arr_a, int *arr_b, int arg, int nulnum)
 	i = 0;
 	while (arr_a[size] != nulnum && size < arg)
 		size++;
-	med = find_median(arr_a, size);
-	printf("median a: %d\n\n", med);
-	while ((i <= size / 2 && size % 2 != 0) || (i < size / 2 && size % 2 == 0))
+	if (size >= 4)
 	{
-		if (arr_a[0] <= med)
+		med = find_median(arr_a, size);
+		//printf("median a: %d\n\n", med);
+		while ((i <= size / 2 && size % 2 != 0) || (i < size / 2 && size % 2 == 0))
 		{
-			ft_push_b(arr_a, arr_b, arg, nulnum);
+			if (arr_a[size - 1 - i] <= med)
+			{
+				ft_revrot_a(arr_a, arg, nulnum);
+				ft_push_b(arr_a, arr_b, arg, nulnum);
+				i++;
+			}
+			else if (arr_a[0] <= med)
+			{
+				ft_push_b(arr_a, arr_b, arg, nulnum);
+				i++;
+			}
+			else if (arr_a[0] > med)
+				ft_rot_a(arr_a, arg, nulnum);
+		}
+		/*i = 0;
+		while (i < arg)
+		{
+			printf("%d ", arr_a[i]);
 			i++;
 		}
-		else if (arr_a[0] > med)
-			ft_rot_a(arr_a, arg, nulnum);
-	}
-	i = 0;
-	while (i < arg)
-	{
-		printf("%d ", arr_a[i]);
-		i++;
-	}
-	printf("\n");
-	i = 0;
-	while (i < arg)
-	{
-		printf("%d ", arr_b[i]);
-		i++;
-	}
-	printf("\n");
-	if (size >= 5)
+		printf("\n");
+		i = 0;
+		while (i < arg)
+		{
+			printf("%d ", arr_b[i]);
+			i++;
+		}
+		printf("\n");*/
 		rec_organize_a(arr_a, arr_b, arg, nulnum);
-	if (size < 5 && arr_a[0] > arr_a[1])
-		ft_swap_a(arr_a, nulnum);
-	if (size < 5 && arr_b[0] < arr_b[1])
-		ft_swap_b(arr_b, nulnum);
+	}
+	else
+	{
+		if (arr_a[0] > arr_a[1])
+			ft_swap_a(arr_a, nulnum);
+		if (arr_a[0] > arr_a[size - 1])
+			ft_revrot_a(arr_a, arg, nulnum);
+		if (arr_a[0] < arr_a[size - 1] && arr_a[1] > arr_a[size - 1])
+		{
+			ft_revrot_a(arr_a, arg, nulnum);
+			ft_swap_a(arr_a, nulnum);
+		}
+	}
 	rec_organize_b(arr_a, arr_b, arg, nulnum, size / 2 + (size % 2));
 }
 
@@ -154,8 +172,9 @@ int	main(int ac, char **av)
 		free (arr_b);
 		return (0);
 	}
-	rec_organize_a(arr_a, arr_b, j, i);
-	i = 0;
+	if (!(ft_check_order(arr_a, j, i) && arr_b[0] == i))
+		rec_organize_a(arr_a, arr_b, j, i);
+	/*i = 0;
 	while (i < j)
 	{
 		printf("%d ", arr_a[i]);
@@ -168,7 +187,8 @@ int	main(int ac, char **av)
 		printf("%d ", arr_b[i]);
 		i++;
 	}
-	printf("\n");
+	printf("\n");*/
 	free (arr_a);
 	free (arr_b);
+	return (0);
 }

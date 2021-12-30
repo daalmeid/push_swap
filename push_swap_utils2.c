@@ -6,7 +6,7 @@
 /*   By: daalmeid <daalmeid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 16:29:54 by daalmeid          #+#    #+#             */
-/*   Updated: 2021/12/27 14:48:01 by daalmeid         ###   ########.fr       */
+/*   Updated: 2021/12/29 14:10:42 by daalmeid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,32 @@ int	prep_arr_a(int **arr_a, int **arr_b, int ac, char **av)
 	if (!ft_dup_check(size, *arr_a))
 		return (0);
 	return (size);
+}
+
+int	order_bottom_or_top(int *arr_a, int med_half, int size)
+{
+	int	bottom;
+	int	top;
+	int	num;
+
+	num = arr_a[0];
+	top = 0;
+	while (top < size)
+	{
+		if (arr_a[top] < num)
+			num = arr_a[top];
+		top++;
+	}
+	top = 0;
+	while (arr_a[top] != num)
+		top++;
+	bottom = 0;
+	while (arr_a[size--] != med_half)
+		bottom++;
+	if (top > bottom)
+		return (med_half);
+	else
+		return (num);
 }
 
 /*int	main(int ac, char **av)

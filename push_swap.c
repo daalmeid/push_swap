@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   just_playing.c                                     :+:      :+:    :+:   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daalmeid <daalmeid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 18:37:06 by daalmeid          #+#    #+#             */
-/*   Updated: 2021/12/30 15:44:46 by daalmeid         ###   ########.fr       */
+/*   Updated: 2021/12/30 16:26:23 by daalmeid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,26 @@ int	find_index_lowest(int *arr_a, int nulnum, int arrlen)
 	return (index);
 }
 
+void	organize_quarter_by_lstmed(int *arr_a, int med, int arg, int nulnum)
+{
+	int	ind_med;
+
+	arg = ft_arrlen(arr_a, nulnum, arg);
+	ind_med = 0;
+	while (arr_a[ind_med] != med)
+		ind_med++;
+	if (arg - 1 - ind_med < ind_med)
+	{
+		while (ind_med++ < arg - 1)
+			ft_revrot_a(arr_a, arg, nulnum);
+	}
+	else if (arg - 1 - ind_med >= ind_med)
+	{
+		while (arr_a[arg - 1] != med)
+			ft_rot_a(arr_a, arg, nulnum);
+	}
+}
+
 void	organize_quarter(int *arr_a, int med, int arg, int nulnum)
 {
 	int	ind_lowest;
@@ -57,26 +77,6 @@ void	organize_quarter(int *arr_a, int med, int arg, int nulnum)
 			while (arr_a[arg - 1] != med)
 				ft_rot_a(arr_a, arg, nulnum);
 		}
-	}
-}
-
-void	organize_quarter_by_lstmed(int *arr_a, int med, int arg, int nulnum)
-{
-	int	ind_med;
-
-	arg = ft_arrlen(arr_a, nulnum, arg);
-	ind_med = 0;
-	while (arr_a[ind_med] != med)
-		ind_med++;
-	if (arg - 1 - ind_med < ind_med)
-	{
-		while (ind_med++ < arg - 1)
-			ft_revrot_a(arr_a, arg, nulnum);
-	}
-	else if (arg - 1 - ind_med >= ind_med)
-	{
-		while (arr_a[arg - 1] != med)
-			ft_rot_a(arr_a, arg, nulnum);
 	}
 }
 
@@ -238,13 +238,11 @@ int	main(int ac, char **av)
 	organize_quarter_by_lstmed(arr_a, med1, arg, nulnum);
 	rec_organize_b(arr_a, arr_b, arg, nulnum);
 	med1 = send_quarter_b(arr_a, arr_b, arg, nulnum);
-	//organize_quarter(arr_a, med2, arg, nulnum);
 	organize_quarter_by_lstmed(arr_a, med2, arg, nulnum);
 	rec_organize_b(arr_a, arr_b, arg, nulnum);
 	med2 = send_quarter_b(arr_a, arr_b, arg, nulnum);
 	rec_organize_b(arr_a, arr_b, arg, nulnum);
 	organize_quarter_by_lstmed(arr_a, med2, arg, nulnum);
-	//organize_quarter(arr_a, med1, arg, nulnum);
 	/*i = 0;
 	while (i < j)
 	{

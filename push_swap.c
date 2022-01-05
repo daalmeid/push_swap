@@ -6,34 +6,13 @@
 /*   By: daalmeid <daalmeid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 18:37:06 by daalmeid          #+#    #+#             */
-/*   Updated: 2021/12/30 16:26:23 by daalmeid         ###   ########.fr       */
+/*   Updated: 2022/01/05 17:47:57 by daalmeid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "push_swap.h"
 #include <stdio.h>
-
-int	find_index_lowest(int *arr_a, int nulnum, int arrlen)
-{
-	int	index;
-	int nbr;
-	int	i;
-
-	index = 0;
-	nbr = arr_a[0];
-	i = 0;
-	while (i < arrlen && arr_a[i] != nulnum)
-	{
-		if (arr_a[i] < nbr)
-		{
-			nbr = arr_a[i];
-			index = i;
-		}
-		i++;
-	}
-	return (index);
-}
 
 void	organize_quarter_by_lstmed(int *arr_a, int med, int arg, int nulnum)
 {
@@ -55,129 +34,23 @@ void	organize_quarter_by_lstmed(int *arr_a, int med, int arg, int nulnum)
 	}
 }
 
-void	organize_quarter(int *arr_a, int med, int arg, int nulnum)
-{
-	int	ind_lowest;
-	int	ind_med;
-
-	arg = ft_arrlen(arr_a, nulnum, arg);
-	ind_med = 0;
-	ind_lowest = find_index_lowest(arr_a, nulnum, arg);
-	while (arr_a[ind_med] != med)
-		ind_med++;
-	if (ind_med < ind_lowest)
-	{
-		if (arg - 1 - ind_lowest < ind_med)
-		{
-			while (ind_lowest++ != arg)
-				ft_revrot_a(arr_a, arg, nulnum);
-		}
-		else if (arg - 1 - ind_lowest >= ind_med)
-		{
-			while (arr_a[arg - 1] != med)
-				ft_rot_a(arr_a, arg, nulnum);
-		}
-	}
-}
-
-void	ft_print(int *arr_a, int *arr_b, int arg)
-{
-	int	i;
-
-	i = 0;
-	while (i < arg)
-	{
-		printf("%d ", arr_a[i]);
-		i++;
-	}
-	printf("\n");
-	i = 0;
-	while (i < arg)
-	{
-		printf("%d ", arr_b[i]);
-		i++;
-	}
-	printf("\n");
-}
-
-int	ft_arrlen(int *arr, int nulnum, int arg)
-{
-	int	size;
-	
-	size = 0;
-	while (arr[size] != nulnum && size < arg)
-		size++;
-	return (size);
-}
-
-int	find_quarter_median(int *arr_a, int nulnum, int arg)
-{
-	int	size = ft_arrlen(arr_a, nulnum, arg);
-	static int	med = 2147483647;
-	int	tmp_arr[(size / 2) + (size % 2)];
-	int	i;
-	int	j;
-
-	i = find_median(arr_a, size);
-	if (med < i)
-	{
-		med = i;
-		return (med);
-	}
-	else if (med == i)
-	{
-		i = 0;
-		j = 0;
-		while (i < size)
-		{
-			if (arr_a[i] > med)
-				tmp_arr[j++] = arr_a[i];
-			i++;
-		}
-		med = find_median(tmp_arr, size / 2);
-		return (med);
-	}
-	else if (med > i && med != 2147483647)	
-	{
-		i = 0;
-		j = 0;
-		med = arr_a[0];
-		while (i < size)
-		{
-			if (arr_a[i] > med)
-				med = arr_a[i];
-			i++;
-		}
-		return (med);
-	}
-	med = i;
-	i = 0;
-	j = 0;
-	while (i < size)
-	{
-		if (arr_a[i] <= med)
-			tmp_arr[j++] = arr_a[i];
-		i++;
-	}
-	med = find_median(tmp_arr, size / 2 + size % 2);
-	return (med);
-}
-
-int	get_next_num_test(int *arr_a, int nulnum, int size, int med)
+int	ind_next_num_push_b(int *arr_a, int nulnum, int size, int med)
 {
 	static int	previous_med = -2147483648;
-	int	top;
-	int	bottom;
+	int			top;
+	int			bottom;
 
 	top = 0;
-	while (arr_a[top] != nulnum && (arr_a[top] > med || arr_a[top] <= previous_med))
+	while (top < size && arr_a[top] != nulnum && (arr_a[top] > med
+			|| arr_a[top] <= previous_med))
 		top++;
 	bottom = size - 1;
-	while (bottom >= 0 && (arr_a[bottom] > med || arr_a[bottom] <= previous_med))
+	while (bottom >= 0 && (arr_a[bottom] > med
+			|| arr_a[bottom] <= previous_med))
 		bottom--;
-	if (top < size - 1 - bottom)
+	if (top <= size - 1 - bottom && bottom != -1)
 		return (top);
-	else if (top >= size - 1 - bottom && bottom != -1)
+	else if (top > size - 1 - bottom)
 		return (bottom);
 	previous_med = med;
 	return (-1);
@@ -189,69 +62,90 @@ int	send_quarter_b(int *arr_a, int *arr_b, int arg, int nulnum)
 	int	med;
 	int	i;
 
-	med = find_quarter_median(arr_a, nulnum, arg);
 	size = ft_arrlen(arr_a, nulnum, arg);
-	i = get_next_num_test(arr_a, nulnum, size, med);
+	med = find_quarter_median(arr_a, size);
+	i = ind_next_num_push_b(arr_a, nulnum, size, med);
 	while (i != -1)
 	{
-		if (size - i <= i)
+		if (size - i < i)
 		{
 			while (i++ < size)
 				ft_revrot_a(arr_a, arg, nulnum);
 		}
-		else if (size - i > i)
+		else if (size - i >= i)
 		{
 			while (i-- > 0)
 				ft_rot_a(arr_a, arg, nulnum);
 		}
 		ft_push_b(arr_a, arr_b, arg, nulnum);
-		i = get_next_num_test(arr_a, nulnum, --size, med);
-		//ft_print(arr_a, arr_b, arg);
+		i = ind_next_num_push_b(arr_a, nulnum, --size, med);
 	}
 	return (med);
 }
 
-int	main(int ac, char **av)
+void	applying_sort(int *arr_a, int *arr_b, int arg, int nulnum)
 {
-	int		*arr_a = NULL;
-	int		*arr_b = NULL;
-	int		nulnum;
-	int		arg;
 	int		med1;
 	int		med2;
 
-	if (ac <= 1)
-		return (0);
-	arg = prep_arr_a(&arr_a, &arr_b, ac, av);
-	nulnum = ft_get_nullnum(arr_a, arg);
-	ft_prep_arr_b(arr_b, arg, nulnum);
-	if (!arg)
+	if (ft_check_order(arr_a, arg, nulnum) == 1)
+		return ;
+	else if (arg <= 5)
+		organize_low_nbrs(arr_a, arr_b, arg, nulnum);
+	else
 	{
-		ft_putstr_fd("Error\n", 2);
-		free (arr_a);
-		free (arr_b);
+		med1 = send_quarter_b(arr_a, arr_b, arg, nulnum);
+		order_push_b_to_a(arr_a, arr_b, arg, nulnum);
+		med2 = send_quarter_b(arr_a, arr_b, arg, nulnum);
+		organize_quarter_by_lstmed(arr_a, med1, arg, nulnum);
+		order_push_b_to_a(arr_a, arr_b, arg, nulnum);
+		med1 = send_quarter_b(arr_a, arr_b, arg, nulnum);
+		organize_quarter_by_lstmed(arr_a, med2, arg, nulnum);
+		order_push_b_to_a(arr_a, arr_b, arg, nulnum);
+		med2 = send_quarter_b(arr_a, arr_b, arg, nulnum);
+		order_push_b_to_a(arr_a, arr_b, arg, nulnum);
+		organize_quarter_by_lstmed(arr_a, med2, arg, nulnum);
+	}
+}
+
+int	main(int ac, char **av)
+{
+	int		*arr_a;
+	int		*arr_b;
+	int		nulnum;
+	int		arg;
+
+	if (ac == 1)
+		return (0);
+	arr_a = NULL;
+	arr_b = NULL;
+	arg = prep_arr_a(&arr_a, ac, av);
+	if (arg <= 0)
+	{
+		if (arr_a)
+		{
+			free (arr_a);
+			if (arg != 0)
+				ft_putstr_fd("Error\n", 2);
+		}
 		return (0);
 	}
-	med1 = send_quarter_b(arr_a, arr_b, arg, nulnum);
-	rec_organize_b(arr_a, arr_b, arg, nulnum);
-	med2 = send_quarter_b(arr_a, arr_b, arg, nulnum);
-	organize_quarter_by_lstmed(arr_a, med1, arg, nulnum);
-	rec_organize_b(arr_a, arr_b, arg, nulnum);
-	med1 = send_quarter_b(arr_a, arr_b, arg, nulnum);
-	organize_quarter_by_lstmed(arr_a, med2, arg, nulnum);
-	rec_organize_b(arr_a, arr_b, arg, nulnum);
-	med2 = send_quarter_b(arr_a, arr_b, arg, nulnum);
-	rec_organize_b(arr_a, arr_b, arg, nulnum);
-	organize_quarter_by_lstmed(arr_a, med2, arg, nulnum);
+	nulnum = ft_get_nullnum(arr_a, arg);
+	if (!ft_prep_arr_b(&arr_b, arr_a, arg, nulnum))
+	{
+		free(arr_a);
+		return (0);
+	}
+	applying_sort(arr_a, arr_b, arg, nulnum);
 	/*i = 0;
-	while (i < j)
+	while (i < arg)
 	{
 		printf("%d ", arr_a[i]);
 		i++;
 	}
 	printf("\n");
 	i = 0;
-	while (i < j)
+	while (i < arg)
 	{
 		printf("%d ", arr_b[i]);
 		i++;

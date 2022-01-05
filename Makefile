@@ -6,22 +6,23 @@
 #    By: daalmeid <daalmeid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/20 15:18:15 by daalmeid          #+#    #+#              #
-#    Updated: 2021/12/30 15:47:11 by daalmeid         ###   ########.fr        #
+#    Updated: 2022/01/05 17:35:48 by daalmeid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME	= push_swap
 
-SRCS	= push_swap.c push_swap_utils.c push_swap_utils2.c push_swap_utils3.c\
-		  push_swap_utils4.c
+SRCS	= push_swap.c push_swap_moves1.c push_swap_moves2.c push_swap_moves3.c\
+		  push_b_to_a.c get_median.c arrays_prep.c error_checks_and_nulnum.c\
+		  sort_under5.c
 
 RM = rm -f
 
 LIBFT = libft.a
 
 $(NAME): $(LIBFT)
-	gcc -Wextra -Wall -Werror $(SRCS) -L. -lft -o $(NAME) -g
+	gcc -Wextra -Wall -Werror $(SRCS) -L. -lft -o $(NAME)
 
 $(OBJS):
 	gcc -Wall -Wextra -Werror -c $(SRCS)

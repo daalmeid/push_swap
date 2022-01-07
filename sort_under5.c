@@ -6,7 +6,7 @@
 /*   By: daalmeid <daalmeid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:29:10 by daalmeid          #+#    #+#             */
-/*   Updated: 2022/01/05 17:30:43 by daalmeid         ###   ########.fr       */
+/*   Updated: 2022/01/07 14:54:47 by daalmeid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	organize_under_5(int *arr_a, int *arr_b, int arg, int nulnum)
 	int	med;
 	int	i;
 
-	med = find_median(arr_a, arg);
+	med = ft_find_median(arr_a, arg);
 	while (arr_b[(arg / 2) - 1] == nulnum)
 	{
 		i = get_next_num_lownbrs(arr_a, nulnum, arg, med);
@@ -55,10 +55,10 @@ static void	organize_under_5(int *arr_a, int *arr_b, int arg, int nulnum)
 	}
 	if (arr_b[0] < arr_b[1])
 		ft_swap_b(arr_b, nulnum);
-	organize_low_nbrs(arr_a, arr_b, arg, nulnum);
+	ft_organize_low_nbrs(arr_a, arr_b, arg, nulnum);
 }
 
-void	organize_low_nbrs(int *arr_a, int *arr_b, int arg, int nulnum)
+void	ft_organize_low_nbrs(int *arr_a, int *arr_b, int arg, int nulnum)
 {
 	if (arg <= 3)
 	{

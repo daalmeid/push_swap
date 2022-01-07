@@ -6,7 +6,7 @@
 #    By: daalmeid <daalmeid@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/20 15:18:15 by daalmeid          #+#    #+#              #
-#    Updated: 2022/01/05 17:35:48 by daalmeid         ###   ########.fr        #
+#    Updated: 2022/01/07 17:16:39 by daalmeid         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,26 +14,26 @@
 NAME	= push_swap
 
 SRCS	= push_swap.c push_swap_moves1.c push_swap_moves2.c push_swap_moves3.c\
-		  push_b_to_a.c get_median.c arrays_prep.c error_checks_and_nulnum.c\
-		  sort_under5.c
+		  push_b_to_a.c get_median.c arrays_prep_and_arrlen.c sort_under5.c\
+		  error_checks_and_nulnum.c\
 
 RM = rm -f
 
 LIBFT = libft.a
 
 $(NAME): $(LIBFT)
-	gcc -Wextra -Wall -Werror $(SRCS) -L. -lft -o $(NAME)
+	gcc -Wextra -Wall -Werror $(SRCS) -L. -lft -o $(NAME) -g
 
 $(OBJS):
 	gcc -Wall -Wextra -Werror -c $(SRCS)
 
 $(LIBFT):
-	cd libft/ && make && mv libft.a ../
+	cd libft/ && make && mv libft.a ../ && cp libft.h ../
 	
 all:	$(NAME)
 
 clean:
-	$(RM) $(LIBFT)
+	$(RM) $(LIBFT) libft.h
 
 fclean:	clean
 	$(RM) $(NAME)
